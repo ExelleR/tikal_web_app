@@ -6,13 +6,11 @@ FROM node:14.17.5
 WORKDIR /app
 
 COPY ["package.json", "package-lock.json*", "./"]
-
-RUN npm install
-
 COPY . .
+RUN npm install
+RUN npm run compile
 
 RUN npm test
-RUN npm run compile
 
 EXPOSE 3000
 
