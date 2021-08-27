@@ -10,8 +10,9 @@ resources:
 
 variables:
   # Container registry service connection established during pipeline creation
+  imageName: tikalhomeapp.azurecr.io/exellerpipelinesjavascriptdocker:$(build.buildId)
   dockerRegistryServiceConnection: 'bf2410e5-d32c-4748-8449-9d691a0b1ab8'
-  imageRepository: 'exellertikalwebapp'
+  imageRepository: 'exellerpipelinesjavascriptdocker'
   containerRegistry: 'tikalhomeapp.azurecr.io'
   dockerfilePath: '$(Build.SourcesDirectory)/Dockerfile'
   tag: '$(Build.BuildId)'
@@ -41,3 +42,4 @@ stages:
       inputs:
         azureSubscription: 'Azure subscription 1 (5dc9646c-6897-4aa3-a3be-a8b161e8299f)'
         appName: 'tikal-app'
+        imageName: $(imageName)
