@@ -1,6 +1,6 @@
-# myapp
+# Tikal Assignment Web App
 
-My cool app
+Assignment web app based on node.js and express.js 
 
 ## Get Started
 
@@ -107,13 +107,6 @@ Fix all prettier linter errors
 npm run lint
 ```
 
-## Deploy It
-
-Deploy to CloudFoundry
-
-```shell
-cf push myapp
-```
 
 
    
