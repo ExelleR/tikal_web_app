@@ -7,12 +7,16 @@ Assignment web app based on node.js and express.js
 
 ## Prerequisites:
 Docker 3.6.0 or higher and Node.js 14 or highter
-To set up the application before running it :
+To run the application with docker locally :
 1)  git clone https://github.com/ExelleR/tikal_web_app.git
 2)  cd ./tickal_web_app
+3) docker-compose up -d
+4) Do some changes in application code.  
+5) docker-compose build 
+6) docker-compose up -d
 
-Get started developing...
-
+Or develop without running application inside docker ...
+Go to the root project directory 
 ```shell
 # install deps
 npm install
