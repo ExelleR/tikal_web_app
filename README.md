@@ -16,9 +16,11 @@ To run the application with docker locally :
 6) docker-compose up -d
 
 If your host is Ubuntu then there is an ansible playbook for you that installs all prerequisites to run the web app :
-1) git clone https://github.com/ExelleR/tikal_web_app.git
-2) cd ./ansible
-3) ansible-playbook -i ./inventory  ./playbook.yaml
+1) sudo apt update
+2) sudo apt install ansible
+3) git clone https://github.com/ExelleR/tikal_web_app.git
+4) cd ./ansible
+5) ansible-playbook -i ./inventory  ./playbook.yaml
 
 Or develop without running application inside docker ...
 Go to the root project directory 
