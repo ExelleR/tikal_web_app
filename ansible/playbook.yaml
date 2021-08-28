@@ -6,6 +6,13 @@
       git_repo_url: https://github.com/ExelleR/tikal_web_app.git
       repo_path: ./
       repo_branch: main
+      DOCKER_COMPOSE_VERSION: "1.29.2"
+      DOCKER_PACKAGES:
+      - apt-transport-https
+      - ca-certificates
+      - curl
+      - gnupg-agent
+      - software-properties-common
   tasks:
     - name: Run the equivalent of "apt-get update" as a separate step
       apt:
@@ -21,3 +28,58 @@
          - wget
          - nodejs
          
+    - name: Install packages needed for Docker
+      apt:
+       name: "{{ DOCKER_PACKAGES }}"
+       state: present
+       force_apt_get: "yes"
+    - name: Add Docker GPG apt Key
+      apt_key:
+       url: https://download.docker.com/linux/ubuntu/gpg
+       state: present
+
+    - name: Save the current Ubuntu release version into a variable
+      shell: lsb_release -cs
+      register: ubuntu_version   
+
+    - name: Add Docker Repository
+      apt_repository:
+        repo: "deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ ubuntu_version.stdout }} stable"
+        state: present
+
+    - name: Update apt packages
+      apt:
+        update_cache: "yes"
+        force_apt_get: "yes"  
+    - name: Install Docker
+      apt:
+        name: "docker-ce"
+        state: present
+        force_apt_get: "yes"    
+
+    - name: Create docker group
+      group:
+        name: "docker"
+        state: present
+
+    
+    - name: Run whoami without become.
+      command: whoami
+      changed_when: false
+      become: false
+      register: whoami
+
+    - name: Set a fact with the user name.
+      set_fact:
+        login_user: "{{ whoami.stdout }}"  
+
+    - name: Adding user {{ login_user }} to docker group
+      user:
+        name: "{{ login_user }}"
+        groups: "docker"
+        append: "yes"     
+    - name: Install Docker Compose
+      get_url:
+        url: https://github.com/docker/compose/releases/download/{{ DOCKER_COMPOSE_VERSION }}/docker-compose-Linux-x86_64
+        dest: "/usr/local/bin/docker-compose"
+        mode: 0755    
