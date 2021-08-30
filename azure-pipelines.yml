@@ -1,8 +1,8 @@
 trigger:
-- main
+- dev
 
 pool:
-  vmImage: 'ubuntu-latest'
+  vmImage: 'ubuntu-20.04'
 
 steps:
 - task: NodeTool@0
